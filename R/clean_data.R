@@ -13,8 +13,10 @@
 #' @return Cleaned location name
 #'
 #' @examples
+#' \dontrun{
 #' eq_location_clean("CALIFORNIA:  SANTA BARBARA")
 #' eq_location_clean("MEXICO:  BAJA CALIFORNIA: LORETO")
+#' }
 #'
 #' @importFrom stringr str_replace str_to_title
 eq_location_clean <- function(loc) {
