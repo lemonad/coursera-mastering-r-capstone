@@ -53,12 +53,14 @@ eq_clean_data <- function(df) {
     ),
     # Set US states to have USA as a country.
     Country = stringr::str_replace(
-      stringr::str_replace(`Location Name`, ":.*$", ""),
+      stringr::str_to_title(
+        stringr::str_replace(`Location Name`, ":.*$", "")
+      ),
       paste0(
         "(",
         # Note that Georgia is also a country, so lets not replace that.
         paste(
-          toupper(
+          stringr::str_to_title(
             setdiff(datasets::state.name, "Georgia")
           ),
           collapse = "|"

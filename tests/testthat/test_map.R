@@ -21,7 +21,7 @@ make_df <- function() {
   )
   dplyr::filter(
     clean_df,
-    Country %in% c("MEXICO") & lubridate::year(Date) >= 2010
+    Country %in% c("Mexico") & lubridate::year(Date) >= 2010
   )
 }
 
