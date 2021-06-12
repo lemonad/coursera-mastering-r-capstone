@@ -1,17 +1,18 @@
-# Should not be included if this was a proper module
-# but this makes it so the file can be sourced.
-library(dplyr)
-library(ggplot2)
-library(grid)
+#' Custom geom for plotting NOAA Significant Earthquake data labels on
+#' a timeline.
 
 
 # Although exported, this is how scarce this is documented in ggplot's
 # geom_polygon so I assume this is enough here too. I guess if this is
 # going to be used directly, one would have to look at the source code
 # regardless.
-#' 
+#'
 #' @format NULL
 #' @usage NULL
+#'
+#' @importFrom dplyr slice_max
+#' @importFrom ggplot2 aes ggname ggproto Geom
+#' @importFrom grid draw_key_blank gList gpar grobTree textGrob polylineGrob
 #' @export
 GeomTimelineLabel <- ggplot2::ggproto(
   "GeomTimelineLabel",
@@ -23,7 +24,7 @@ GeomTimelineLabel <- ggplot2::ggproto(
     colour = "gray"
   ),
   draw_key = ggplot2::draw_key_blank,
-  
+
   draw_group = function(data, panel_params, coord, na.rm, n_max) {
     if (!is.na(n_max)) {
       data <- dplyr::slice_max(
@@ -34,7 +35,7 @@ GeomTimelineLabel <- ggplot2::ggproto(
       )
     }
     coords <- coord$transform(data, panel_params)
-    
+
     ggplot2:::ggname(
       "geom_timeline_label",
       grid::grobTree(
@@ -60,6 +61,23 @@ GeomTimelineLabel <- ggplot2::ggproto(
 )
 
 
+#' Plot labels for NOAA Significant Earthquake Data on a timeline.
+#'
+#' @examples
+#' \dontrun{
+#' # Assumes data has been downloaded as `earthquakes.tsv`.
+#' readr::read_delim("./earthquakes.tsv", delim = "\t") %>%
+#'   eq_clean_data(df) %>%
+#'   ggplot(aes(x = Date, y = Country, colour = Deaths),  alpha = 1) +
+#'   geom_timeline() +
+#'   geom_timeline_label(
+#'     aes(label = `Location Name`, magnitude = Mag),
+#'     n_max = 5
+#'   )
+#' }
+#'
+#' @importFrom ggplot2 layer
+#' @export
 geom_timeline_label <- function(
   mapping = NULL,
   data = NULL,

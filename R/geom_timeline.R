@@ -1,18 +1,16 @@
-# Should not be included if this was a proper module
-# but this makes it so the file can be sourced.
-library(ggplot2)
-library(grid)
-
-# @importFrom package "%>%" 
+#' Custom geom for plotting NOAA Significant Earthquake data on a timeline.
 
 
 # Although exported, this is how scarce this is documented in ggplot's
 # geom_polygon so I assume this is enough here too. I guess if this is
 # going to be used directly, one would have to look at the source code
 # regardless.
-#' 
+#'
 #' @format NULL
 #' @usage NULL
+#'
+#' @importFrom ggplot2 aes ggname ggproto Geom
+#' @importFrom grid draw_key_point gList gpar grobTree linesGrob pointsGrob
 #' @export
 GeomTimeline <- ggplot2::ggproto(
   "GeomTimeline",
@@ -58,6 +56,23 @@ GeomTimeline <- ggplot2::ggproto(
 )
 
 
+#' Plot NOAA Significant Earthquake Data on a timeline.
+#'
+#' @seealso
+#'   [geom_point()] for parameters and options.
+#' @inheritParams ggplot2::geom_point
+#'
+#' @examples
+#' \dontrun{
+#' # Assumes data has been downloaded as `earthquakes.tsv`.
+#' readr::read_delim("./earthquakes.tsv", delim = "\t") %>%
+#'   eq_clean_data(df) %>%
+#'   ggplot(aes(x = Date, y = Country, colour = Deaths),  alpha = 1) +
+#'   geom_timeline()
+#' }
+#'
+#' @importFrom ggplot2 layer
+#' @export
 geom_timeline <- function(
   mapping = NULL,
   data = NULL,

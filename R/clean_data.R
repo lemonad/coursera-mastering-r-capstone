@@ -1,15 +1,44 @@
-# Should not be included if this was a proper module
-# but this makes it so the file can be sourced.
-library(dplyr)
-library(stringr)
-library(datasets)
+#' Makes the NOAA Significant Earthquake data easier to use.
+#'
+#' * Combines date columns into a single `Date` column.
+#' * Extracts countries from the location column.
+#' * If location is a US state, sets country to USA.
 
 
+#' Clean location names.
+#'
+#' Removes country, etc. from locations.
+#'
+#' @param loc Earthquake location name
+#' @return Cleaned location name
+#'
+#' @examples
+#' eq_location_clean("CALIFORNIA:  SANTA BARBARA")
+#' eq_location_clean("MEXICO:  BAJA CALIFORNIA: LORETO")
+#'
+#' @importFrom stringr str_replace str_to_title
+#' @export
 eq_location_clean <- function(loc) {
   stringr::str_to_title(stringr::str_replace(loc, ".*:\\s*", ""))
 }
 
 
+#' Clean NOAA Significant Earthquake Data.
+#'
+#' @param df Dataframe containing earthquake data
+#' @return Cleaned dataframe
+#'
+#' @examples
+#' \dontrun{
+#' # Assumes data has been downloaded as `earthquakes.tsv`.
+#' readr::read_delim("./earthquakes.tsv", delim = "\t") %>%
+#'   eq_clean_data(df)
+#' }
+#'
+#' @importFrom datasets state
+#' @importFrom dplyr mutate
+#' @importFrom stringr str_replace
+#' @export
 eq_clean_data <- function(df) {
   dplyr::mutate(
     df[!is.na(df$Year) & df$Year > 0,],
