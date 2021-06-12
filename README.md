@@ -1,3 +1,6 @@
+[![Build
+Status](https://travis-ci.com/lemonad/coursera-mastering-r-capstone.svg?branch=main)](https://travis-ci.com/lemonad/coursera-mastering-r-capstone)
+
 This package is the capstone project for Coursera’s *Mastering Software
 Development in R* specialization consisting of the courses
 
