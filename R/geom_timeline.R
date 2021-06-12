@@ -1,0 +1,81 @@
+# Should not be included if this was a proper module
+# but this makes it so the file can be sourced.
+library(ggplot2)
+library(grid)
+
+# @importFrom package "%>%" 
+
+
+# Although exported, this is how scarce this is documented in ggplot's
+# geom_polygon so I assume this is enough here too. I guess if this is
+# going to be used directly, one would have to look at the source code
+# regardless.
+#' 
+#' @format NULL
+#' @usage NULL
+#' @export
+GeomTimeline <- ggplot2::ggproto(
+  "GeomTimeline",
+  ggplot2::Geom,
+  required_aes = c("x"),
+  default_aes = ggplot2::aes(
+    y = 0,
+    colour = "black",
+    size = 3,
+    alpha = 0.5,
+    shape = 19
+  ),
+  draw_key = ggplot2::draw_key_point,
+  
+  draw_group = function(data, panel_params, coord) {
+    coords <- coord$transform(data, panel_params)
+
+    ggplot2:::ggname(
+      "geom_timeline",
+      grid::grobTree(
+        children = grid::gList(
+          grid::linesGrob(
+            x = c(0.01, 0.99),
+            y = unit(coords$y, "native"),
+            default.units = "npc",
+            gp = grid::gpar(col = "gray", lwd = 2)
+          ),
+          grid::pointsGrob(
+            x = unit(coords$x, "native"),
+            y = unit(coords$y, "native"),
+            pch = coords$shape,
+            size = unit(coords$size / 4, "char"),
+            gp = grid::gpar(
+              alpha = coords$alpha,
+              col = coords$colour,
+              fontsize = coords$size * .pt
+            )
+          )
+        )
+      )
+    )
+  }
+)
+
+
+geom_timeline <- function(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  ...
+) {
+  ggplot2::layer(
+    geom = GeomTimeline,
+    mapping = mapping,
+    data = data,
+    stat = stat,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(na.rm = na.rm, ...)
+  )
+}

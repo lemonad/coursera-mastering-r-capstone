@@ -1,0 +1,6 @@
+^LICENSE\.md$
+^doc$
+^Meta$
+.RData
+.Rhistory
+.travis.yml

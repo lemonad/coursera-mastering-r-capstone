@@ -1,0 +1,35 @@
+Package: earthquakecapstone
+Title: Earthquake visualization functions for Coursera's R Specialization Capstone
+Version: 0.1.0
+Authors@R:
+    person(given = "Jonas",
+           family = "Nockert",
+           role = c("aut", "cre"),
+           email = "jonasnockert@gmail.com",
+           comment = c(ORCID = "0000-0002-5425-4992"))
+Description: Functions to process and visualize NOAA Significant Earthquakes dataset.
+License: MIT + file LICENSE
+URL: https://github.com/lemonad/coursera-mastering-r-capstone
+BugReports: https://github.com/lemonad/coursera-mastering-r-capstone/issues
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Imports:
+    datasets,
+    dplyr,
+    ggplot2,
+    graphics,
+    grid,
+    leaflet,
+    readr,
+    rlang,
+    stringr
+RoxygenNote: 7.1.1
+Depends:
+    R (>= 3.5.0)
