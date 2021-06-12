@@ -35,7 +35,6 @@ eq_location_clean <- function(loc) {
 #'   eq_clean_data(df)
 #' }
 #'
-#' @importFrom datasets state
 #' @importFrom dplyr mutate
 #' @importFrom stringr str_replace
 #' @export

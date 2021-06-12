@@ -11,8 +11,8 @@
 #' @usage NULL
 #'
 #' @importFrom dplyr slice_max
-#' @importFrom ggplot2 aes ggname ggproto Geom
-#' @importFrom grid draw_key_blank gList gpar grobTree textGrob polylineGrob
+#' @importFrom ggplot2 aes draw_key_blank ggproto Geom
+#' @importFrom grid gList gpar grobTree textGrob polylineGrob
 #' @export
 GeomTimelineLabel <- ggplot2::ggproto(
   "GeomTimelineLabel",

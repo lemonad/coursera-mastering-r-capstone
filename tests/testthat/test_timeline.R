@@ -9,7 +9,7 @@ library(earthquakecapstone)
 make_df <- function() {
   data_path <- system.file(
     "extdata",
-    "earthquakes-2021-05-16_00-12-51_+0200.tsv",
+    "earthquakes.tsv",
     package = "earthquakecapstone",
     mustWork = TRUE
   )

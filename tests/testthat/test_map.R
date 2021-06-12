@@ -3,13 +3,14 @@ library(ggplot2)
 library(leaflet)
 library(lubridate)
 library(readr)
+library(stringr)
 library(earthquakecapstone)
 
 
 make_df <- function() {
   data_path <- system.file(
     "extdata",
-    "earthquakes-2021-05-16_00-12-51_+0200.tsv",
+    "earthquakes.tsv",
     package = "earthquakecapstone",
     mustWork = TRUE
   )
@@ -53,7 +54,7 @@ test_that("labels are created", {
   labels <- eq_create_label(df)
   expect_type(labels, "character")
   expect_true(length(labels) > 1)
-  expect_true(any(str_detect(labels, "Location:")))
-  expect_true(any(str_detect(labels, "Magnitude:")))
-  expect_true(any(str_detect(labels, "Total deaths:")))
+  expect_true(any(stringr::str_detect(labels, "Location:")))
+  expect_true(any(stringr::str_detect(labels, "Magnitude:")))
+  expect_true(any(stringr::str_detect(labels, "Total deaths:")))
 })

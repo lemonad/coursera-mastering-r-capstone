@@ -9,8 +9,8 @@
 #' @format NULL
 #' @usage NULL
 #'
-#' @importFrom ggplot2 aes ggname ggproto Geom
-#' @importFrom grid draw_key_point gList gpar grobTree linesGrob pointsGrob
+#' @importFrom ggplot2 aes draw_key_point ggproto Geom
+#' @importFrom grid gList gpar grobTree linesGrob pointsGrob
 #' @export
 GeomTimeline <- ggplot2::ggproto(
   "GeomTimeline",
