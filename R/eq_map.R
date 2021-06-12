@@ -38,6 +38,7 @@ eq_create_label <- function(data) {
 #' @param annot_col Name of column containing data for event popups
 #' @return Leaflet map
 #'
+#' @examples
 #' \dontrun{
 #' # Assumes data has been downloaded as `earthquakes.tsv`.
 #' readr::read_delim("./earthquakes.tsv", delim = "\t") %>%

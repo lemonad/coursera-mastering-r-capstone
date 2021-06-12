@@ -63,6 +63,9 @@ GeomTimelineLabel <- ggplot2::ggproto(
 
 #' Plot labels for NOAA Significant Earthquake Data on a timeline.
 #'
+#' @inheritParams ggplot2::geom_text
+#' @param n_max Maximum number of labels to annotate timeline with
+#'
 #' @examples
 #' \dontrun{
 #' # Assumes data has been downloaded as `earthquakes.tsv`.

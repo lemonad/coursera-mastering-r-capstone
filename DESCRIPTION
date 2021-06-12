@@ -28,6 +28,7 @@ Imports:
     grid,
     leaflet,
     lubridate,
+    magrittr,
     readr,
     rlang,
     stringr

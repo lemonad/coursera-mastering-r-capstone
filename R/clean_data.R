@@ -45,9 +45,9 @@ eq_clean_data <- function(df) {
     Date = as.Date(
       paste(
         paste(
-          Year,
-          ifelse(is.na(Mo), 1, Mo),
-          ifelse(is.na(Dy), 1, Dy),
+          df$Year,
+          ifelse(is.na(df$Mo), 1, Mo),
+          ifelse(is.na(df$Dy), 1, Dy),
           sep = "-"
         )
       )
@@ -55,7 +55,7 @@ eq_clean_data <- function(df) {
     # Set US states to have USA as a country.
     Country = stringr::str_replace(
       stringr::str_to_title(
-        stringr::str_replace(`Location Name`, ":.*$", "")
+        stringr::str_replace(df$`Location Name`, ":.*$", "")
       ),
       paste0(
         "(",
@@ -70,9 +70,9 @@ eq_clean_data <- function(df) {
       ),
       "USA"
     ),
-    `Location Name` = eq_location_clean(`Location Name`),
-    Latitude = as.numeric(Latitude),
-    Longitude = as.numeric(Longitude),
+    `Location Name` = eq_location_clean(df$`Location Name`),
+    Latitude = as.numeric(df$Latitude),
+    Longitude = as.numeric(df$Longitude),
     .before = "Year"
   )
 }
