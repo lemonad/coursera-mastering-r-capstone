@@ -13,15 +13,17 @@ eq_map(data, annot_col)
 }
 \value{
 Leaflet map
-
-\dontrun{
-# Assumes data has been downloaded as `earthquakes.tsv`.
-readr::read_delim("./earthquakes.tsv", delim = "\t") %>%
-  eq_clean_data() %>%
-  dplyr::mutate(popup_text = eq_create_label(.)) %>%
-  eq_map(annot_col = "popup_text")
-}
 }
 \description{
 Map of earthquake events.
+}
+\examples{
+\dontrun{
+# Assumes data has been downloaded as `earthquakes.tsv`.
+readr::read_delim("./earthquakes.tsv", delim = "\t") \%>\%
+  eq_clean_data() \%>\%
+  dplyr::mutate(popup_text = eq_create_label(.)) \%>\%
+  eq_map(annot_col = "popup_text")
+}
+
 }
