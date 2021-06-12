@@ -1,5 +1,6 @@
 ^LICENSE\.md$
 ^README_files$
+^README.Rmd$
 ^doc$
 ^Meta$
 .RData

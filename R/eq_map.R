@@ -49,9 +49,13 @@ eq_create_label <- function(data) {
 #'
 #' @importFrom dplyr filter pull
 #' @importFrom leaflet addCircleMarkers addTiles leaflet
+#' @importFrom rlang .data
 #' @export
 eq_map <- function(data, annot_col) {
-  locations <- dplyr::filter(data, !is.na(Longitude) & !is.na(Latitude))
+  locations <- dplyr::filter(
+    data,
+    !is.na(.data$Longitude) & !is.na(.data$Latitude)
+  )
   leaflet::addCircleMarkers(
     # Add default OpenStreetMap map tiles.
     leaflet::addTiles(

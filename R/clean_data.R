@@ -47,8 +47,8 @@ eq_clean_data <- function(df) {
       paste(
         paste(
           .data$Year,
-          ifelse(is.na(.data$Mo), 1, Mo),
-          ifelse(is.na(.data$Dy), 1, Dy),
+          ifelse(is.na(.data$Mo), 1, .data$Mo),
+          ifelse(is.na(.data$Dy), 1, .data$Dy),
           sep = "-"
         )
       )
