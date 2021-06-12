@@ -8,18 +8,25 @@ vignette: >
 ---
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(ggplot2)
 library(magrittr)
 library(leaflet)
 library(lubridate)
 library(readr)
-library(earthquakecoursera)
+library(earthquakecapstone)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.align = "center",
   fig_width = 8,
-  fig_height = 5,
-  root.dir = system.file("extdata", package = "earthquakecapstone")
+  fig_height = 5
+)
+knitr::opts_knit$set(
+  root.dir = system.file(
+    "extdata",
+    package = "earthquakecapstone",
+    mustWork = TRUE
+  )
 )
 ```
 
