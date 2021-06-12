@@ -17,7 +17,6 @@
 #' eq_location_clean("MEXICO:  BAJA CALIFORNIA: LORETO")
 #'
 #' @importFrom stringr str_replace str_to_title
-#' @export
 eq_location_clean <- function(loc) {
   stringr::str_to_title(stringr::str_replace(loc, ".*:\\s*", ""))
 }
