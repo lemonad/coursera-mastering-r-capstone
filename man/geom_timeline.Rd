@@ -65,13 +65,14 @@ to the paired geom/stat.}
 Plot NOAA Significant Earthquake Data on a timeline.
 }
 \examples{
-\dontrun{
-# Assumes data has been downloaded as `earthquakes.tsv`.
-readr::read_delim("./earthquakes.tsv", delim = "\t") \%>\%
-  eq_clean_data(df) \%>\%
-  ggplot(aes(x = Date, y = Country, colour = Deaths),  alpha = 1) +
+# Assumes the NOAA earthquake dataset has been obtained per method
+# in `data-raw/earthquakes.R`.
+ggplot2::ggplot(
+  eq_clean_data(earthquakes),
+  ggplot2::aes(x = date, y = country, colour = deathsTotal),
+  alpha = 1
+) +
   geom_timeline()
-}
 
 }
 \seealso{

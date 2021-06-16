@@ -24,7 +24,7 @@ GeomTimeline <- ggplot2::ggproto(
     shape = 19
   ),
   draw_key = ggplot2::draw_key_point,
-  
+
   draw_group = function(data, panel_params, coord) {
     coords <- coord$transform(data, panel_params)
 
@@ -34,19 +34,19 @@ GeomTimeline <- ggplot2::ggproto(
         children = grid::gList(
           grid::linesGrob(
             x = c(0.01, 0.99),
-            y = unit(coords$y, "native"),
+            y = ggplot2::unit(coords$y, "native"),
             default.units = "npc",
             gp = grid::gpar(col = "gray", lwd = 2)
           ),
           grid::pointsGrob(
-            x = unit(coords$x, "native"),
-            y = unit(coords$y, "native"),
+            x = ggplot2::unit(coords$x, "native"),
+            y = ggplot2::unit(coords$y, "native"),
             pch = coords$shape,
-            size = unit(coords$size / 4, "char"),
+            size = ggplot2::unit(coords$size / 4, "char"),
             gp = grid::gpar(
               alpha = coords$alpha,
               col = coords$colour,
-              fontsize = coords$size * .pt
+              fontsize = coords$size * ggplot2::.pt
             )
           )
         )
@@ -63,13 +63,14 @@ GeomTimeline <- ggplot2::ggproto(
 #' @inheritParams ggplot2::geom_point
 #'
 #' @examples
-#' \dontrun{
-#' # Assumes data has been downloaded as `earthquakes.tsv`.
-#' readr::read_delim("./earthquakes.tsv", delim = "\t") %>%
-#'   eq_clean_data(df) %>%
-#'   ggplot(aes(x = Date, y = Country, colour = Deaths),  alpha = 1) +
+#' # Assumes the NOAA earthquake dataset has been obtained per method
+#' # in `data-raw/earthquakes.R`.
+#' ggplot2::ggplot(
+#'   eq_clean_data(earthquakes),
+#'   ggplot2::aes(x = date, y = country, colour = deathsTotal),
+#'   alpha = 1
+#' ) +
 #'   geom_timeline()
-#' }
 #'
 #' @importFrom ggplot2 layer
 #' @export

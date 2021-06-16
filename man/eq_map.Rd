@@ -18,12 +18,14 @@ Leaflet map
 Map of earthquake events.
 }
 \examples{
-\dontrun{
-# Assumes data has been downloaded as `earthquakes.tsv`.
-readr::read_delim("./earthquakes.tsv", delim = "\t") \%>\%
-  eq_clean_data() \%>\%
-  dplyr::mutate(popup_text = eq_create_label(.)) \%>\%
-  eq_map(annot_col = "popup_text")
-}
+# Assumes the NOAA earthquake dataset has been obtained per method
+# in `data-raw/earthquakes.R`.
+eq_map(
+  dplyr::mutate(
+    eq_clean_data(earthquakes),
+    popup_text = eq_create_label(.data)
+  ),
+  annot_col = "popup_text"
+)
 
 }

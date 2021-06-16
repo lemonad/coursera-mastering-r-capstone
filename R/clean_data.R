@@ -13,10 +13,8 @@
 #' @return Cleaned location name
 #'
 #' @examples
-#' \dontrun{
-#' eq_location_clean("CALIFORNIA:  SANTA BARBARA")
-#' eq_location_clean("MEXICO:  BAJA CALIFORNIA: LORETO")
-#' }
+#' earthquakecapstone:::eq_location_clean("CALIFORNIA:  SANTA BARBARA")
+#' earthquakecapstone:::eq_location_clean("MEXICO:  BAJA CALIFORNIA: LORETO")
 #'
 #' @importFrom stringr str_replace str_to_title
 eq_location_clean <- function(loc) {
@@ -30,50 +28,39 @@ eq_location_clean <- function(loc) {
 #' @return Cleaned dataframe
 #'
 #' @examples
-#' \dontrun{
-#' # Assumes data has been downloaded as `earthquakes.tsv`.
-#' readr::read_delim("./earthquakes.tsv", delim = "\t") %>%
-#'   eq_clean_data(df)
-#' }
+#' # Assumes the NOAA earthquake dataset has been obtained per method
+#' # in `data-raw/earthquakes.R`.
+#' eq_clean_data(earthquakes)
 #'
 #' @importFrom dplyr mutate
 #' @importFrom rlang .data
 #' @importFrom stringr str_replace
 #' @export
 eq_clean_data <- function(df) {
+  ace_df <- dplyr::filter(
+    df,
+    !is.na(.data$year) & .data$year > 0
+  )
   dplyr::mutate(
-    df[!is.na(df$Year) & df$Year > 0,],
-    Date = as.Date(
+    ace_df,
+    date = as.Date(
       paste(
         paste(
-          .data$Year,
-          ifelse(is.na(.data$Mo), 1, .data$Mo),
-          ifelse(is.na(.data$Dy), 1, .data$Dy),
+          .data$year,
+          ifelse(is.na(.data$month), 1, .data$month),
+          ifelse(is.na(.data$day), 1, .data$day),
           sep = "-"
         )
       )
     ),
-    # Set US states to have USA as a country.
-    Country = stringr::str_replace(
-      stringr::str_to_title(
-        stringr::str_replace(.data$`Location Name`, ":.*$", "")
-      ),
-      paste0(
-        "(",
-        # Note that Georgia is also a country, so lets not replace that.
-        paste(
-          stringr::str_to_title(
-            setdiff(datasets::state.name, "Georgia")
-          ),
-          collapse = "|"
-        ),
-        ")"
-      ),
-      "USA"
+    country = ifelse(
+      .data$country == "USA",
+      .data$country,
+      stringr::str_to_title(.data$country)
     ),
-    `Location Name` = eq_location_clean(.data$`Location Name`),
-    Latitude = as.numeric(.data$Latitude),
-    Longitude = as.numeric(.data$Longitude),
-    .before = "Year"
+    locationName = eq_location_clean(.data$locationName),
+    latitude = as.numeric(.data$latitude),
+    longitude = as.numeric(.data$longitude),
+    .before = "year"
   )
 }

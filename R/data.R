@@ -1,0 +1,59 @@
+#' Significant Earthquakes.
+#'
+#' Data provided by NOAA.
+#'
+#' @format A data frame with 49 variables
+#' \describe{
+#' \item{\code{area}}{}
+#' \item{\code{country}}{country or epicenter}
+#' \item{\code{damageAmountOrder}}{}
+#' \item{\code{damageAmountOrderTotal}}{}
+#' \item{\code{damageMillionsDollars}}{}
+#' \item{\code{damageMillionsDollarsTotal}}{}
+#' \item{\code{day}}{day when earthquake occurred}
+#' \item{\code{deaths}}{}
+#' \item{\code{deathsAmountOrder}}{}
+#' \item{\code{deathsAmountOrderTotal}}{}
+#' \item{\code{deathsTotal}}{total number of deaths earthquake resulted in}
+#' \item{\code{eqDepth}}{}
+#' \item{\code{eqMagMb}}{}
+#' \item{\code{eqMagMfa}}{}
+#' \item{\code{eqMagMl}}{}
+#' \item{\code{eqMagMs}}{}
+#' \item{\code{eqMagMw}}{}
+#' \item{\code{eqMagnitude}}{magnitude of earthquake}
+#' \item{\code{eqMagUnk}}{}
+#' \item{\code{hour}}{hour when earthquake occurred}
+#' \item{\code{housesDamaged}}{}
+#' \item{\code{housesDamagedAmountOrder}}{}
+#' \item{\code{housesDamagedAmountOrderTotal}}{}
+#' \item{\code{housesDamagedTotal}}{}
+#' \item{\code{housesDestroyed}}{}
+#' \item{\code{housesDestroyedAmountOrder}}{}
+#' \item{\code{housesDestroyedAmountOrderTotal}}{}
+#' \item{\code{housesDestroyedTotal}}{}
+#' \item{\code{id}}{}
+#' \item{\code{injuries}}{}
+#' \item{\code{injuriesAmountOrder}}{}
+#' \item{\code{injuriesAmountOrderTotal}}{}
+#' \item{\code{injuriesTotal}}{}
+#' \item{\code{intensity}}{}
+#' \item{\code{latitude}}{Latitude of epicenter}
+#' \item{\code{locationName}}{location of earthquake, possibly multiple}
+#' \item{\code{longitude}}{Longitude of epicenter}
+#' \item{\code{minute}}{minute when earthquake occurred}
+#' \item{\code{missing}}{}
+#' \item{\code{missingAmountOrder}}{}
+#' \item{\code{missingAmountOrderTotal}}{}
+#' \item{\code{missingTotal}}{}
+#' \item{\code{month}}{month when earthquake occurred}
+#' \item{\code{publish}}{}
+#' \item{\code{regionCode}}{}
+#' \item{\code{second}}{second when earthquake occurred}
+#' \item{\code{tsunamiEventId}}{}
+#' \item{\code{volcanoEventId}}{}
+#' \item{\code{year}}{year when earthquake occurred}
+#' }
+#' @usage earthquakes
+#' @source https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/earthquakes
+"earthquakes"

@@ -24,9 +24,7 @@ Clean location names.
 Removes country, etc. from locations.
 }
 \examples{
-\dontrun{
-eq_location_clean("CALIFORNIA:  SANTA BARBARA")
-eq_location_clean("MEXICO:  BAJA CALIFORNIA: LORETO")
-}
+earthquakecapstone:::eq_location_clean("CALIFORNIA:  SANTA BARBARA")
+earthquakecapstone:::eq_location_clean("MEXICO:  BAJA CALIFORNIA: LORETO")
 
 }

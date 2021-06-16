@@ -6,12 +6,12 @@
 #' @return List of html labels for events
 #'
 #' @examples
-#' \dontrun{
-#' # Assumes data has been downloaded as `earthquakes.tsv`.
-#' readr::read_delim("./earthquakes.tsv", delim = "\t") %>%
-#'   eq_clean_data() %>%
-#'   dplyr::mutate(popup_text = eq_create_label(.))
-#' }
+#' # Assumes the NOAA earthquake dataset has been obtained per method
+#' # in `data-raw/earthquakes.R`.
+#' dplyr::mutate(
+#'   eq_clean_data(earthquakes),
+#'   popup_text = eq_create_label(.data)
+#' )
 #'
 #' @export
 eq_create_label <- function(data) {
@@ -24,9 +24,9 @@ eq_create_label <- function(data) {
   }
 
   paste(
-    empty_if_na(data$`Location Name`, "Location"),
-    empty_if_na(data$Mag, "Magnitude"),
-    empty_if_na(data$`Total Deaths`, "Total deaths"),
+    empty_if_na(data$locationName, "Location"),
+    empty_if_na(data$eqMagnitude, "Magnitude"),
+    empty_if_na(data$deathsTotal, "Total deaths"),
     sep = "<br/>"
   )
 }
@@ -39,13 +39,15 @@ eq_create_label <- function(data) {
 #' @return Leaflet map
 #'
 #' @examples
-#' \dontrun{
-#' # Assumes data has been downloaded as `earthquakes.tsv`.
-#' readr::read_delim("./earthquakes.tsv", delim = "\t") %>%
-#'   eq_clean_data() %>%
-#'   dplyr::mutate(popup_text = eq_create_label(.)) %>%
-#'   eq_map(annot_col = "popup_text")
-#' }
+#' # Assumes the NOAA earthquake dataset has been obtained per method
+#' # in `data-raw/earthquakes.R`.
+#' eq_map(
+#'   dplyr::mutate(
+#'     eq_clean_data(earthquakes),
+#'     popup_text = eq_create_label(.data)
+#'   ),
+#'   annot_col = "popup_text"
+#' )
 #'
 #' @importFrom dplyr filter pull
 #' @importFrom leaflet addCircleMarkers addTiles leaflet
@@ -54,18 +56,18 @@ eq_create_label <- function(data) {
 eq_map <- function(data, annot_col) {
   locations <- dplyr::filter(
     data,
-    !is.na(.data$Longitude) & !is.na(.data$Latitude)
+    !is.na(.data$longitude) & !is.na(.data$latitude)
   )
   leaflet::addCircleMarkers(
     # Add default OpenStreetMap map tiles.
     leaflet::addTiles(
       leaflet::leaflet()
     ),
-    lng = locations$Longitude,
-    lat = locations$Latitude,
+    lng = locations$longitude,
+    lat = locations$latitude,
     # Use paste here in case column is not a string.
     popup = paste(dplyr::pull(locations, annot_col)),
-    radius = locations$Mag,
+    radius = locations$eqMagnitude,
     stroke = TRUE,
     fillOpacity = 0.3,
     weight = 2

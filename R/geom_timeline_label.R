@@ -42,15 +42,15 @@ GeomTimelineLabel <- ggplot2::ggproto(
       grid::grobTree(
         children = grid::gList(
           grid::polylineGrob(
-            x = unit(rep(coords$x, 2), "native"),
-            y = unit(c(coords$y, coords$y + 0.08), "native"),
+            x = ggplot2::unit(rep(coords$x, 2), "native"),
+            y = ggplot2::unit(c(coords$y, coords$y + 0.08), "native"),
             id = rep(seq_along(coords$x), 2),
             default.units = "npc",
             gp = grid::gpar(col = "gray")
           ),
           grid::textGrob(
-            x = unit(coords$x, "native"),
-            y = unit(coords$y + 0.1, "native"),
+            x = ggplot2::unit(coords$x, "native"),
+            y = ggplot2::unit(coords$y + 0.1, "native"),
             label = coords$label,
             rot = 45,
             just = c(0, 0.5)
@@ -68,17 +68,18 @@ GeomTimelineLabel <- ggplot2::ggproto(
 #' @param n_max Maximum number of labels to annotate timeline with
 #'
 #' @examples
-#' \dontrun{
-#' # Assumes data has been downloaded as `earthquakes.tsv`.
-#' readr::read_delim("./earthquakes.tsv", delim = "\t") %>%
-#'   eq_clean_data(df) %>%
-#'   ggplot(aes(x = Date, y = Country, colour = Deaths),  alpha = 1) +
+#' # Assumes the NOAA earthquake dataset has been obtained per method
+#' # in `data-raw/earthquakes.R`.
+#' ggplot2::ggplot(
+#'   eq_clean_data(earthquakes),
+#'   ggplot2::aes(x = date, y = country, colour = deathsTotal),
+#'   alpha = 1
+#' ) +
 #'   geom_timeline() +
 #'   geom_timeline_label(
-#'     aes(label = `Location Name`, magnitude = Mag),
+#'     ggplot2::aes(label = locationName, magnitude = eqMagnitude),
 #'     n_max = 5
 #'   )
-#' }
 #'
 #' @importFrom ggplot2 layer
 #' @export

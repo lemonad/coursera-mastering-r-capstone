@@ -16,10 +16,8 @@ Cleaned dataframe
 Clean NOAA Significant Earthquake Data.
 }
 \examples{
-\dontrun{
-# Assumes data has been downloaded as `earthquakes.tsv`.
-readr::read_delim("./earthquakes.tsv", delim = "\t") \%>\%
-  eq_clean_data(df)
-}
+# Assumes the NOAA earthquake dataset has been obtained per method
+# in `data-raw/earthquakes.R`.
+eq_clean_data(earthquakes)
 
 }

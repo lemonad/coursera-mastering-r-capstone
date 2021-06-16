@@ -8,34 +8,23 @@ library(earthquakecapstone)
 
 
 make_df <- function() {
-  data_path <- system.file(
-    "extdata",
-    "earthquakes.tsv",
-    package = "earthquakecapstone",
-    mustWork = TRUE
-  )
-  clean_df <- eq_clean_data(
-    suppressWarnings(
-      readr::read_delim(data_path, delim = "\t", col_types = cols())
-    )
-  )
   dplyr::filter(
-    clean_df,
-    Country %in% c("Mexico") & lubridate::year(Date) >= 2010
+    eq_clean_data(earthquakes),
+    country %in% c("Mexico") & lubridate::year(date) >= 2010
   )
 }
 
 
 test_that("map plot is leaflet", {
   df <- make_df()
-  p <- eq_map(df, annot_col = "Mag")
+  p <- eq_map(df, annot_col = "eqMagnitude")
   expect_s3_class(p, "leaflet")
 })
 
 
 test_that("map plot contains locations in Mexico", {
   df <- make_df()
-  p <- eq_map(df, annot_col = "Mag")
+  p <- eq_map(df, annot_col = "eqMagnitude")
   lat <- p$x$limits$lat
   lng <- p$x$limits$lng
 

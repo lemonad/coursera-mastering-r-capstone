@@ -18,11 +18,11 @@ Plots earthquake events on a map.
 Helper function to create html labels for events.
 }
 \examples{
-\dontrun{
-# Assumes data has been downloaded as `earthquakes.tsv`.
-readr::read_delim("./earthquakes.tsv", delim = "\t") \%>\%
-  eq_clean_data() \%>\%
-  dplyr::mutate(popup_text = eq_create_label(.))
-}
+# Assumes the NOAA earthquake dataset has been obtained per method
+# in `data-raw/earthquakes.R`.
+dplyr::mutate(
+  eq_clean_data(earthquakes),
+  popup_text = eq_create_label(.data)
+)
 
 }

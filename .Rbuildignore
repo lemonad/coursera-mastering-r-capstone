@@ -6,3 +6,4 @@
 .RData
 .Rhistory
 .travis.yml
+^data-raw$

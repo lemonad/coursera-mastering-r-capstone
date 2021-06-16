@@ -26,12 +26,14 @@ Imports:
     ggplot2,
     graphics,
     grid,
+    jsonlite,
     leaflet,
     lubridate,
     magrittr,
     readr,
     rlang,
-    stringr
+    stringr,
+    usethis
 RoxygenNote: 7.1.1
 Depends:
     R (>= 3.5.0)

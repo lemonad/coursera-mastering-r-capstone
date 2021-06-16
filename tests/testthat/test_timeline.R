@@ -7,57 +7,46 @@ library(earthquakecapstone)
 
 
 make_df <- function() {
-  data_path <- system.file(
-    "extdata",
-    "earthquakes.tsv",
-    package = "earthquakecapstone",
-    mustWork = TRUE
-  )
-  clean_df <- eq_clean_data(
-    suppressWarnings(
-      readr::read_delim(data_path, delim = "\t", col_types = cols())
-    )
-  )
   dplyr::filter(
-    clean_df,
-    Country %in% c("Mexico", "USA") & lubridate::year(Date) >= 2010
+    eq_clean_data(earthquakes),
+    country %in% c("Mexico", "USA") & lubridate::year(date) >= 2010
   )
 }
 
 
 test_that("timeline plot has date axis", {
   df <- make_df()
-  p <- ggplot(df, aes(x = Date)) + geom_timeline()
+  p <- ggplot(df, aes(x = date)) + geom_timeline()
 
   expect_true(is.ggplot(p))
-  expect_identical(p$labels$x, "Date")
-  expect_false("Country" %in% p$labels)
+  expect_identical(p$labels$x, "date")
+  expect_false("country" %in% p$labels)
 })
 
 
 test_that("timeline plot has corresponding axes", {
   df <- make_df()
-  p <- ggplot(df, aes(x = Date, y = Country, colour = `Total Deaths`)) +
+  p <- ggplot(df, aes(x = date, y = country, colour = deathsTotal)) +
     geom_timeline()
 
   expect_true(is.ggplot(p))
-  expect_identical(p$labels$x, "Date")
-  expect_identical(p$labels$y, "Country")
-  expect_identical(p$labels$colour, "Total Deaths")
+  expect_identical(p$labels$x, "date")
+  expect_identical(p$labels$y, "country")
+  expect_identical(p$labels$colour, "deathsTotal")
 })
 
 
 test_that("timeline label plot has corresponding axes", {
   df <- make_df()
-  p <- ggplot(df, aes(x = Date)) +
+  p <- ggplot(df, aes(x = date)) +
     geom_timeline() +
     geom_timeline_label(
-      aes(label = `Location Name`, magnitude = Mag),
+      aes(label = locationName, magnitude = eqMagnitude),
       n_max = 5
     )
 
   expect_true(is.ggplot(p))
-  expect_identical(p$labels$x, "Date")
-  expect_identical(p$labels$label, "Location Name")
-  expect_identical(p$labels$magnitude, "Mag")
+  expect_identical(p$labels$x, "date")
+  expect_identical(p$labels$label, "locationName")
+  expect_identical(p$labels$magnitude, "eqMagnitude")
 })

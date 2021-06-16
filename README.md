@@ -19,49 +19,32 @@ The package provides functions to clean and visualize data from the
 [NOAA Significant Earthquake
 Database](https://www.ngdc.noaa.gov/hazel/view/hazards/earthquake/search).
 
+### Installation
+
+Install the development version of this package using
+
+    devtools::install_github("lemonad/coursera-mastering-r-capstone")
+
 ### Dataset
 
-The NOAA Significant Earthquake database can be downloaded by visiting
-[the
-database](https://www.ngdc.noaa.gov/hazel/view/hazards/earthquake/search)
-and performing a search. In the top left corner of the result there is
-an icon for downloading the results as a tab-separated file.
+The NOAA Significant Earthquake database can be made available by
+executing the following
+
+    api_uri <- "https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/earthquakes"
+    f <- jsonlite::read_json(api_uri, simplify = TRUE)
+    earthquakes <- dplyr::as_tibble(f$items)
 
 ### Cleaning
 
-Assuming the dataset has been downloaded as `earthquakes.tsv`, the data
-can be cleaned using the function `eq_clean_data` which returns a
-dataframe that can be subsequentially filtered, etc.
+The API data has some quirks and can be made easier to work with by
+using the function `eq_clean_data` which returns a dataframe that can be
+subsequently filtered, etc.
 
-    df <- readr::read_delim("earthquakes.tsv", delim = "\t") %>%
+    df <- earthquakes %>%
       eq_clean_data() %>%
       dplyr::filter(
-        Country %in% c("USA", "Mexico") & lubridate::year(Date) >= 2000
+        country %in% c("USA", "Mexico") & lubridate::year(date) >= 2000
       )
-
-    ## 
-    ## ── Column specification ────────────────────────────────────────────────────────
-    ## cols(
-    ##   .default = col_double(),
-    ##   `Search Parameters` = col_character(),
-    ##   `Location Name` = col_character(),
-    ##   Missing = col_logical(),
-    ##   `Damage ($Mil)` = col_logical(),
-    ##   `Total Missing` = col_logical(),
-    ##   `Total Missing Description` = col_logical(),
-    ##   `Total Damage ($Mil)` = col_logical()
-    ## )
-    ## ℹ Use `spec()` for the full column specifications.
-
-    ## Warning: 994 parsing failures.
-    ##  row           col           expected actual              file
-    ## 1634 Damage ($Mil) 1/0/T/F/TRUE/FALSE   3    'earthquakes.tsv'
-    ## 1653 Damage ($Mil) 1/0/T/F/TRUE/FALSE   0.17 'earthquakes.tsv'
-    ## 1665 Missing       1/0/T/F/TRUE/FALSE   30   'earthquakes.tsv'
-    ## 1665 Total Missing 1/0/T/F/TRUE/FALSE   30   'earthquakes.tsv'
-    ## 1756 Damage ($Mil) 1/0/T/F/TRUE/FALSE   0.8  'earthquakes.tsv'
-    ## .... ............. .................. ...... .................
-    ## See problems(...) for more details.
 
 Note that the BCE events are removed from the results per the
 requirements of using the class `Date` for the dates. This could be
@@ -77,14 +60,17 @@ total number of deaths. The five highest magnitude events are annotated
 with their corresponding location.
 
     df %>%
-      ggplot(aes(x = Date, y = Country, colour = `Total Deaths`), alpha = 1) +
+      ggplot2::ggplot(
+        ggplot2::aes(x = date, y = country, colour = deathsTotal),
+        alpha = 
+      ) +
       geom_timeline() +
       geom_timeline_label(
-        aes(label = `Location Name`, magnitude = Mag),
+        ggplot2::aes(label = locationName, magnitude = eqMagnitude),
         n_max = 5
       )
 
-<img src="README_files/figure-markdown_strict/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 ### Map
 
@@ -97,4 +83,4 @@ for the tooltip.
       dplyr::mutate(popup_text = eq_create_label(.)) %>%
       eq_map(annot_col = "popup_text")
 
-<img src="README_files/figure-markdown_strict/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />

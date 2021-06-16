@@ -69,16 +69,17 @@ to the paired geom/stat.}
 Plot labels for NOAA Significant Earthquake Data on a timeline.
 }
 \examples{
-\dontrun{
-# Assumes data has been downloaded as `earthquakes.tsv`.
-readr::read_delim("./earthquakes.tsv", delim = "\t") \%>\%
-  eq_clean_data(df) \%>\%
-  ggplot(aes(x = Date, y = Country, colour = Deaths),  alpha = 1) +
+# Assumes the NOAA earthquake dataset has been obtained per method
+# in `data-raw/earthquakes.R`.
+ggplot2::ggplot(
+  eq_clean_data(earthquakes),
+  ggplot2::aes(x = date, y = country, colour = deathsTotal),
+  alpha = 1
+) +
   geom_timeline() +
   geom_timeline_label(
-    aes(label = `Location Name`, magnitude = Mag),
+    ggplot2::aes(label = locationName, magnitude = eqMagnitude),
     n_max = 5
   )
-}
 
 }
